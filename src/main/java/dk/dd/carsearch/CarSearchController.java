@@ -25,7 +25,6 @@ public class CarSearchController
         return carClient.readCars()
                 .getContent()
                 .stream()
-                .filter(this :: isMine)
                 .collect(Collectors.toList());
     }
 

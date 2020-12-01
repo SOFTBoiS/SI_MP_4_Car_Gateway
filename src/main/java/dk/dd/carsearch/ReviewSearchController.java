@@ -20,11 +20,13 @@ public class ReviewSearchController {
     @GetMapping("/username/{username}")
     @ResponseBody
     @CrossOrigin(origins = "*") // allow request from any client
-    public List<Review> myCars(@PathVariable String username)
+    public List<Review> getReviewsByUsername(@PathVariable String username)
     {
         String rsReview = reviewClient.readReviewsByUsername(username);
         List<Review> reviews = GSON.fromJson(rsReview, new TypeToken<List<Review>>(){}.getType());
         return reviews;
-
     }
+
+  
+
 }
