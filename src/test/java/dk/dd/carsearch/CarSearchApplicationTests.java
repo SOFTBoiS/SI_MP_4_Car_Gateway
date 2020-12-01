@@ -1,13 +1,12 @@
 package dk.dd.carsearch;
 
-import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CarSearchApplicationTests {
+public class CarSearchApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+//    @Test
+//    void contextLoads() {
+//    }
 
 }

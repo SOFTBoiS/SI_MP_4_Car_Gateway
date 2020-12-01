@@ -1,11 +1,7 @@
 package dk.dd.carsearch;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -32,6 +28,9 @@ public class CarSearchController
                 .filter(this :: isMine)
                 .collect(Collectors.toList());
     }
+
+
+
 
     private boolean isMine(Car car)
     {
