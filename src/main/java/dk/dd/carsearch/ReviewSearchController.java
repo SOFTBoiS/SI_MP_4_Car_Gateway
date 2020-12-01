@@ -27,4 +27,15 @@ public class ReviewSearchController {
         return reviews;
 
     }
+
+    @GetMapping("/car-id/{carId}")
+    @ResponseBody
+    @CrossOrigin(origins = "*") // allow request from any client
+    public List<Review> reviewsByCarId(@PathVariable String carId)
+    {
+        String rsReview = reviewClient.readReviewsByCarId(carId);
+        List<Review> reviews = GSON.fromJson(rsReview, new TypeToken<List<Review>>(){}.getType());
+        return reviews;
+
+    }
 }

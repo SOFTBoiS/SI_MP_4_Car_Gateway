@@ -13,4 +13,7 @@ public interface ReviewSearchClient {
 
     @GetMapping("/reviews/username/{username}")
     String readReviewsByUsername(@PathVariable String username);
+
+    @GetMapping("/reviews/car-id/{carId}")
+    String readReviewsByCarId(@PathVariable String carId);
 }
