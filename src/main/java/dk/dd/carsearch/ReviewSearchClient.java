@@ -12,7 +12,7 @@ public interface ReviewSearchClient {
     @GetMapping("/reviews/username/{username}")
     String readReviewsByUsername(@PathVariable String username);
 
-    @PostMapping("/reviews")
+    @PostMapping("/reviews/")
     String writeReview(@RequestBody Review review);
 
 

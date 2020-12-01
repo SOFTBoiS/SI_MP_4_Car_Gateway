@@ -2,11 +2,12 @@ package dk.dd.carsearch;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class ReviewSearchController {
@@ -42,15 +43,21 @@ public class ReviewSearchController {
     }
 
     @PostMapping("/review")
-    public Review postReview(@RequestBody Review review){
-        Car car; // =
+    @HystrixCommand(fallbackMethod = "fallback")
+    public ResponseEntity postReview(@RequestBody Review review){
+        String car = carClient.readCarById(review.carId);
 
-        if(car != null){
-            String res = reviewClient.writeReview(review);
-            Review resReview = GSON.fromJson(res, Review.class);
+        if(car == null){
+            return new ResponseEntity("Car not found", HttpStatus.NOT_FOUND);
         }
 
+        String res = reviewClient.writeReview(review);
+        Review resReview = GSON.fromJson(res, Review.class);
+        return new ResponseEntity(resReview, HttpStatus.OK);
     }
 
 
+    private ResponseEntity fallback(Review review){
+        return new ResponseEntity("Something went wrong with your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
