@@ -22,7 +22,7 @@ public class ReviewSearchController {
         this.carClient = carClient;
     }
 
-    @GetMapping("/username/{username}")
+    @GetMapping("/reviews/username/{username}")
     @ResponseBody
     @CrossOrigin(origins = "*") // allow request from any client
     public List<Review> getReviewsByUsername(@PathVariable String username)
@@ -32,7 +32,7 @@ public class ReviewSearchController {
         return reviews;
     }
 
-    @GetMapping("/car-id/{carId}")
+    @GetMapping("/reviews/car-id/{carId}")
     @ResponseBody
     @CrossOrigin(origins = "*") // allow request from any client
     public List<Review> reviewsByCarId(@PathVariable String carId)
@@ -42,7 +42,7 @@ public class ReviewSearchController {
         return reviews;
     }
 
-    @PostMapping("/review")
+    @PostMapping("/reviews")
     @HystrixCommand(fallbackMethod = "fallback")
     public ResponseEntity postReview(@RequestBody Review review){
         String car = carClient.readCarById(review.carId);
