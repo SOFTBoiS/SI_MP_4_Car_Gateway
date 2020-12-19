@@ -13,6 +13,9 @@ import java.util.List;
 @RibbonClient(name="rent-a-car", configuration = RibbonConfig.class)
 public interface OrderSearchClient {
 
+    @GetMapping("orders/{id}")
+    Order getOrderById(@PathVariable String id);
+
     @GetMapping("/orders/username/{username}")
     String getOrdersByUsername(@PathVariable String username);
 

@@ -22,7 +22,14 @@ public class OrderSearchController {
         this.orderClient = orderClient;
         this.translateClient = translateClient;
     }
-    
+
+    @GetMapping("/orders/{id}")
+    @ResponseBody
+    @CrossOrigin(origins = "*") // allow request from any client
+    public Order getOrderById(@PathVariable String id) {
+        return orderClient.getOrderById(id);
+    }
+
     @GetMapping("/orders/username/{username}")
     @ResponseBody
     @CrossOrigin(origins = "*") // allow request from any client
