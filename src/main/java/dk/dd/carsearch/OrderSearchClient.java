@@ -3,6 +3,9 @@ package dk.dd.carsearch;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.hateoas.Resources;
+
+import java.util.List;
 
 
 @CrossOrigin
@@ -13,7 +16,7 @@ public interface OrderSearchClient {
     @GetMapping("/orders/username/{username}")
     String getOrdersByUsername(@PathVariable String username);
 
-    @PostMapping("/orders/")
+    @PostMapping("/orders")
     String makeOrder(@RequestBody Order order);
 
     @GetMapping("/orders/car-id/{carId}")

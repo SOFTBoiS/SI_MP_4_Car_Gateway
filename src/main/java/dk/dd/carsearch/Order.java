@@ -1,15 +1,19 @@
 package dk.dd.carsearch;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@XmlRootElement
 public class Order {
     String id;
     @NonNull String username;
-    @NonNull int carId;
+    @NonNull long carId;
+    @NonNull String startDate;
+    @NonNull String endDate;
+    @NonNull long price;
 }
