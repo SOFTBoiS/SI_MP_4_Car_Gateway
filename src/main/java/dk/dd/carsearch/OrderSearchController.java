@@ -22,17 +22,7 @@ public class OrderSearchController {
         this.orderClient = orderClient;
         this.translateClient = translateClient;
     }
-
-    @GetMapping("/orders/")
-    @ResponseBody
-    @CrossOrigin(origins = "*") // allow request from any client
-    public List<Order> getOrders(@PathVariable String username, @RequestHeader("Accept") String accept)
-    {
-        String rsOrder = orderClient.getOrdersByUsername(username);
-        List<Order> orders = GSON.fromJson(rsOrder, new TypeToken<List<Order>>(){}.getType());
-        return orders;
-    }
-
+    
     @GetMapping("/orders/username/{username}")
     @ResponseBody
     @CrossOrigin(origins = "*") // allow request from any client
