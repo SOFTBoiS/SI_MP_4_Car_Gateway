@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 public class OrderSearchController {
@@ -17,6 +18,7 @@ public class OrderSearchController {
     private OrderSearchClient orderClient = null;
     private TranslateClient translateClient = null;
     private final Gson GSON = new Gson();
+    Logger logger = Logger.getLogger(OrderSearchController.class.getName());
 
     public OrderSearchController(OrderSearchClient orderClient, TranslateClient translateClient) {
         this.orderClient = orderClient;
@@ -55,13 +57,17 @@ public class OrderSearchController {
     @CrossOrigin(origins = "*") // allow request from any client
     @HystrixCommand(fallbackMethod = "fallbackPost")
     public ResponseEntity postOrder(@RequestBody Order order, @RequestHeader("Accept") String accept){
+        try {
+            String res = orderClient.makeOrder(order);
+            res = "{ order : " + res + "}";
+            res = convertToXML(accept, res);
 
+            return new ResponseEntity(res, HttpStatus.CREATED);
 
-        String res = orderClient.makeOrder(order);
-        res = "{ order : " + res + "}";
-        res = convertToXML(accept, res);
-
-        return new ResponseEntity(res, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.warning("A post failed in OrderSearchController with msg: " + e.getMessage());
+            return  new ResponseEntity("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/orders/{id}")
